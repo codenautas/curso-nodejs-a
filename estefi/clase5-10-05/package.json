@@ -1,0 +1,17 @@
+{
+  "name": "sesiones",
+  "version": "1.0.0",
+  "description": "como trabajar con sesiones",
+  "main": "clase5.js",
+  "scripts": {
+    "run": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "connect-mongo": "^1.1.0",
+    "mongojs": "^2.3.0"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "conectarsedb",
+  "version": "1.0.0",
+  "description": "como conectarse a mongo con node",
+  "main": "db.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongojs": "^2.3.0"
+  }
+}

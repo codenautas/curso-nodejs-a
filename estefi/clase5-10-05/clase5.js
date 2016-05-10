@@ -31,10 +31,22 @@ app.get("/login/:usuario/:pwd",function(req,res){
     var usuario=req.params.usuario;
     var pwd=req.params.pwd;
     var pwd=utils.encrypt(pwd);
-    var usuarioDeLaBase= db.usuarios.find({user:usuario,password:pwd})
+    var usuarioDeLaBase= function(cb){
+        db.usuarios.find({user:usuario,password:pwd},cb)
+    }
+    usuarioDeLaBase(function(err,usuario){
+        if(err){
+            res.send("error")
+        }else{
+            res.send('usuario permitido');
+        }
+    })
+    /*
+    console.log("usuarioDeLaBase",usuarioDeLaBase)
     if(usuarioDeLaBase){
         res.send('usuario permitido');
     }
+    */
 });
 
 app.listen(3031,function(){

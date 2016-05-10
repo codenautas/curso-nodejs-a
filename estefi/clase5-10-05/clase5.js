@@ -25,11 +25,14 @@ app.get("/signup",function(req,res){
 
 });
 
-app.get("/login/:text",function(req,res){
-    var parametro=req.params.text;
-    
-    var test=utils.encrypt(parametro);
-    res.send(test);
+app.get("/login/:usuario/:pwd",function(req,res){
+    var usuario=req.params.usuario;
+    var pwd=req.params.pwd;
+    var pwd=utils.encrypt(pwd);
+    var usuarioDeLaBase= db.usuarios.find({user:usuario,password:pwd})
+    if(usuarioDeLaBase){
+        res.send('usuario permitido');
+    }
 });
 
 app.listen(3031,function(){

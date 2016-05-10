@@ -24,7 +24,9 @@ app.use(session({
 app.get("/signup",function(req,res){
 
 });
-
+//probar con localhost:3031/login/tester/1234
+// En la base de datos sistemas de antes agregué:
+// db.usuarios.insert({user:"tester",password:"7110eda4d09e062aa5e4a390b0a572ac0d2c0220"})
 app.get("/login/:usuario/:pwd",function(req,res){
     var usuario=req.params.usuario;
     var pwd=req.params.pwd;

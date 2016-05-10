@@ -6,6 +6,7 @@ var app = express();
 var utils=require('./lib/utils');
 var mongojs = require('mongojs');
 var db= mongojs("localhost:27017/sistemas",["usuarios"]);
+var bodyParser=require('body-parser');
 
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
@@ -19,11 +20,7 @@ app.use(session({
     })
 }));
 
-
-
-app.get("/signup",function(req,res){
-
-});
+app.use(bodyParser.json());
 //probar con localhost:3031/login/tester/1234
 // En la base de datos sistemas de antes agregué:
 // db.usuarios.insert({user:"tester",password:"7110eda4d09e062aa5e4a390b0a572ac0d2c0220"})
@@ -31,24 +28,40 @@ app.get("/login/:usuario/:pwd",function(req,res){
     var usuario=req.params.usuario;
     var pwd=req.params.pwd;
     var pwd=utils.encrypt(pwd);
-    var usuarioDeLaBase= function(cb){
-        db.usuarios.find({user:usuario,password:pwd},cb)
-    }
-    usuarioDeLaBase(function(err,usuario){
+   
+    db.usuarios.findOne({user:usuario,password:pwd},function(err,usuario){
+        console.log(err,usuario);
         if(err){
-            res.send("error")
+            res.json(err);
         }else{
-            res.send('usuario permitido');
+            res.json(usuario);
         }
-    })
-    /*
-    console.log("usuarioDeLaBase",usuarioDeLaBase)
-    if(usuarioDeLaBase){
-        res.send('usuario permitido');
-    }
-    */
+    });
 });
-
+app.post("/login",function(req,res){
+    var usuario=req.body.usuario;
+    var pwd=req.body.pwd;
+    var pwd=utils.encrypt(pwd);
+   
+    db.usuarios.findOne({user:usuario,password:pwd},function(err,usuario){
+        console.log(err,usuario);
+        if(err){
+            res.json(err);
+        }else{
+            if(usuario){
+                req.session.usuario=usuario;
+                
+            }
+            res.json(usuario);
+        }
+    });
+});
+//res.redirect('/visitas')
+/*
+app.get("/visitas",function(req,res){
+    res.json(req.session.count);
+});
+*/
 app.listen(3031,function(){
     console.log("Server up en puerto:3031");
 });
